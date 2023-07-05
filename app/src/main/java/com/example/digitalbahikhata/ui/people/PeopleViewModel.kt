@@ -1,13 +1,13 @@
-package com.example.digitalbahikhata.ui.notifications
+package com.example.digitalbahikhata.ui.people
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class PeopleViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is People Fragment"
     }
     val text: LiveData<String> = _text
 }
