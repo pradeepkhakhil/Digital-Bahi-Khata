@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/navigation_loans"
-        android:name="com.example.digitalbahikhata.ui.dashboard.DashboardFragment"
+        android:name="com.example.digitalbahikhata.ui.loans.LoansFragment"
         android:label="@string/title_loans"
         tools:layout="@layout/fragment_loans" />
 
     <fragment
         android:id="@+id/navigation_people"
-        android:name="com.example.digitalbahikhata.ui.dashboard.DashboardFragment"
+        android:name="com.example.digitalbahikhata.ui.people.PeopleFragment"
         android:label="@string/title_people"
         tools:layout="@layout/fragment_people" />
 

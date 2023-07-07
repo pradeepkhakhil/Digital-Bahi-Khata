@@ -8,30 +8,37 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.digitalbahikhata.databinding.FragmentPeopleBinding
-import com.example.digitalbahikhata.ui.loans.LoansViewModel
 
 class PeopleFragment : Fragment() {
 
     private var _binding: FragmentPeopleBinding? = null
-
     private val binding get() = _binding!!
+    private val adapter = PeopleAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         val peopleViewModel =
             ViewModelProvider(this).get(PeopleViewModel::class.java)
 
         _binding = FragmentPeopleBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textPeople
-        peopleViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerViewPeople.adapter = adapter
+
+        binding.addButton.setOnClickListener {
+            AddPeopleDialogFragment().show(childFragmentManager, "")
         }
-        return root
     }
 
     override fun onDestroyView() {

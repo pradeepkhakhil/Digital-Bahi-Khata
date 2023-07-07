@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.digitalbahikhata.databinding.FragmentDashboardBinding
 import com.example.digitalbahikhata.databinding.FragmentLoansBinding
-import com.example.digitalbahikhata.ui.dashboard.DashboardViewModel
 
 class LoansFragment : Fragment() {
 
