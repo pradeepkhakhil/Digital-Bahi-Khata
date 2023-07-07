@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.people.AddPeopleDialogFragment">
+    tools:context=".ui.customer.AddCustomerDialogFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/add_new_people"
+        android:text="@string/add_new_customer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />

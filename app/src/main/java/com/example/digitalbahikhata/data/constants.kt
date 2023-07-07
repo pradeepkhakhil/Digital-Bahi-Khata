@@ -1,4 +1,3 @@
 package com.example.digitalbahikhata.data
 
-class People {
-}
+const val NODE_CUSTOMERS = "customers"

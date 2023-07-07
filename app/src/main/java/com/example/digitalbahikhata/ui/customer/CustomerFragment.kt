@@ -1,19 +1,18 @@
-package com.example.digitalbahikhata.ui.people
+package com.example.digitalbahikhata.ui.customer
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.digitalbahikhata.databinding.FragmentPeopleBinding
+import com.example.digitalbahikhata.databinding.FragmentCustomerBinding
 
-class PeopleFragment : Fragment() {
+class CustomerFragment : Fragment() {
 
-    private var _binding: FragmentPeopleBinding? = null
+    private var _binding: FragmentCustomerBinding? = null
     private val binding get() = _binding!!
-    private val adapter = PeopleAdapter()
+    private val adapter = CustomerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +23,10 @@ class PeopleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val peopleViewModel =
-            ViewModelProvider(this).get(PeopleViewModel::class.java)
+        val customerViewModel =
+            ViewModelProvider(this).get(CustomerViewModel::class.java)
 
-        _binding = FragmentPeopleBinding.inflate(inflater, container, false)
+        _binding = FragmentCustomerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,7 +36,7 @@ class PeopleFragment : Fragment() {
         binding.recyclerViewPeople.adapter = adapter
 
         binding.addButton.setOnClickListener {
-            AddPeopleDialogFragment().show(childFragmentManager, "")
+            AddCustomerDialogFragment().show(childFragmentManager, "")
         }
     }
 
