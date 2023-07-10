@@ -10,12 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.digitalbahikhata.R
 import com.example.digitalbahikhata.data.Customer
-import com.example.digitalbahikhata.databinding.FragmentAddCustomerDialogBinding
+import com.example.digitalbahikhata.databinding.FragmentUpdateCustomerDialogBinding
 
 
-class AddCustomerDialogFragment : DialogFragment() {
+class UpdateCustomerDialogFragment(private val customer: Customer) : DialogFragment() {
 
-    private var _binding: FragmentAddCustomerDialogBinding? = null
+    private var _binding: FragmentUpdateCustomerDialogBinding? = null
     private val binding get() = _binding!!
     private lateinit var customerViewModel: CustomerViewModel
 
@@ -30,25 +30,17 @@ class AddCustomerDialogFragment : DialogFragment() {
     ): View? {
         customerViewModel = ViewModelProvider(this).get(CustomerViewModel::class.java)
 
-        _binding = FragmentAddCustomerDialogBinding.inflate(inflater, container, false)
+        _binding = FragmentUpdateCustomerDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        customerViewModel.result.observe(viewLifecycleOwner, Observer {
-            val message = if (it == null) {
-                getString(R.string.customer_added)
-            } else {
-                getString(R.string.error, it.message)
-            }
+        binding.editTextFullName.setText(customer.fullName)
+        binding.editTextContact.setText(customer.contactNumber)
 
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            dismiss()
-        })
-
-        binding.buttonAdd.setOnClickListener {
+        binding.buttonUpdate.setOnClickListener {
             val fullName = binding.editTextFullName.text.toString().trim()
             val contactNumber = binding.editTextContact.text.toString().trim()
 
@@ -57,11 +49,12 @@ class AddCustomerDialogFragment : DialogFragment() {
                 return@setOnClickListener
             }
 
-            val customer = Customer()
             customer.fullName = fullName
             customer.contactNumber = contactNumber
 
-            customerViewModel.addCustomer(customer)
+            customerViewModel.updateCustomer(customer)
+            dismiss()
+            Toast.makeText(context, "Customer has been updated", Toast.LENGTH_SHORT).show()
         }
 
     }

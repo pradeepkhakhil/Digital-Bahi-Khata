@@ -10,4 +10,8 @@
     <string name="add_full_name">Full Name</string>
     <string name="add_contact_number">Contact Number</string>
     <string name="save_coustmer">Save Coustmer</string>
+    <string name="customer_added">Customer has been added successfully</string>
+    <string name="error">%1$s</string>
+    <string name="edit_customer">Edit Customer</string>
+    <string name="update_customer">Update Customer</string>
 </resources>
