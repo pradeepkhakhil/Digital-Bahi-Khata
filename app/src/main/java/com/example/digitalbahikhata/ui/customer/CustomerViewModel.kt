@@ -1,7 +1,5 @@
 package com.example.digitalbahikhata.ui.customer
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,7 +45,12 @@ class CustomerViewModel : ViewModel() {
             _customer.value = customer!!
         }
 
-        override fun onChildRemoved(snapshot: DataSnapshot) {}
+        override fun onChildRemoved(snapshot: DataSnapshot) {
+            val customer = snapshot.getValue(Customer::class.java)
+            customer?.id = snapshot.key
+            customer?.isDeleted = true
+            _customer.value = customer!!
+        }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
@@ -65,6 +68,16 @@ class CustomerViewModel : ViewModel() {
 
     fun updateCustomer(customer: Customer) {
         dbcustomers.child(customer.id!!).setValue(customer).addOnCompleteListener {
+            if (it.isSuccessful) {
+                _result.value = null
+            } else {
+                _result.value = it.exception
+            }
+        }
+    }
+
+    fun deleteCustomer(customer: Customer) {
+        dbcustomers.child(customer.id!!).setValue(null).addOnCompleteListener {
             if (it.isSuccessful) {
                 _result.value = null
             } else {

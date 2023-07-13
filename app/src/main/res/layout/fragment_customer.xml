@@ -29,7 +29,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_people"
+        android:id="@+id/recycler_view_customer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="60dp"
@@ -48,6 +48,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/baseline_person_add_24"
-         />
+        android:contentDescription="@string/customerpic" />
 
 </FrameLayout>

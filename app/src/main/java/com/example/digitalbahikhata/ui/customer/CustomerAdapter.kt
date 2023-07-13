@@ -32,22 +32,22 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.ViewHolder>(), Filt
             customersBkp.add(customer)
         } else {
             val index = customers.indexOf(customer)
-            customers[index] = customer
+            if (customer.isDeleted) {
+                customers.removeAt(index)
+                customersBkp.removeAt(index)
+            } else {
+                customers[index] = customer
+            }
         }
-        notifyDataSetChanged()
-    }
-
-    fun setFilterCustomerList(customerList: MutableList<Customer>) {
-        this.customers = customerList
         notifyDataSetChanged()
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
 
-            override fun performFiltering(charSequence: CharSequence?): Filter.FilterResults {
+            override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 val queryString = charSequence?.toString().orEmpty().lowercase()
-                return Filter.FilterResults().apply {
+                return FilterResults().apply {
                     values = when {
                         queryString.isEmpty() -> customersBkp
                         else -> customersBkp.filter {
@@ -58,7 +58,7 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.ViewHolder>(), Filt
                 }
             }
 
-            override fun publishResults(charSequence: CharSequence?, filterResults: Filter.FilterResults) {
+            override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults) {
                 customers = (filterResults.values as List<Customer>).toMutableList()
                 notifyDataSetChanged()
             }

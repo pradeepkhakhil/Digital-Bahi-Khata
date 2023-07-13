@@ -1,10 +1,10 @@
 package com.example.digitalbahikhata.ui.customer
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.digitalbahikhata.data.Customer
 import com.example.digitalbahikhata.databinding.FragmentCustomerBinding
 
 class CustomerFragment : Fragment() {
@@ -31,7 +30,7 @@ class CustomerFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCustomerBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(CustomerViewModel::class.java)
 
@@ -54,7 +53,7 @@ class CustomerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerViewPeople.adapter = adapter
+        binding.recyclerViewCustomer.adapter = adapter
 
         binding.addButton.setOnClickListener {
             AddCustomerDialogFragment().show(childFragmentManager, "")
@@ -65,8 +64,8 @@ class CustomerFragment : Fragment() {
         })
         viewModel.getRealtimeUpdate()
 
-        var itemTouchHelper = ItemTouchHelper(simpleCallback)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerViewPeople)
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewCustomer)
     }
 
     private var simpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT.or(ItemTouchHelper.RIGHT)) {
@@ -79,15 +78,27 @@ class CustomerFragment : Fragment() {
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            var position = viewHolder.adapterPosition
-            var currentCustomer = adapter.customers[position]
+            val position = viewHolder.adapterPosition
+            val currentCustomer = adapter.customers[position]
 
             when(direction) {
                 ItemTouchHelper.RIGHT -> {
                     UpdateCustomerDialogFragment(currentCustomer).show(childFragmentManager, "")
                 }
+
+                ItemTouchHelper.LEFT -> {
+                    AlertDialog.Builder(requireContext()).also {
+                        it.setTitle("Are you sure you want to delete this Customer?")
+                        it.setPositiveButton("Yes") { dialog, which ->
+                            viewModel.deleteCustomer(currentCustomer)
+                            binding.recyclerViewCustomer.adapter?.notifyItemRemoved(position)
+                            Toast.makeText(context, "Customer has been deleted", Toast.LENGTH_SHORT).show()
+                        }
+                    }.create().show()
+                }
+
             }
-            binding.recyclerViewPeople.adapter?.notifyDataSetChanged()
+            binding.recyclerViewCustomer.adapter?.notifyDataSetChanged()
         }
 
     }
